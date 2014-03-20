@@ -11,7 +11,7 @@
  *  `arguments` reference within your functions).
  *  
  *  The reason you would want an actual [[Array]] is simple:
- *  [[Array Prototype extends Array]] to equip it with numerous extra methods,
+ *  Prototype extends [[Array]] to equip it with numerous extra methods,
  *  and also mixes in the [[Enumerable]] module, which brings in another
  *  boatload of nifty methods. Therefore, in Prototype, actual [[Array]]s trump
  *  any other collection type you might otherwise get.
