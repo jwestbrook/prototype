@@ -325,6 +325,22 @@ suite("Form Interactions",function(){
     };
     assertHashEqual(hash, form.serialize(true));
 });
+
+  test("Form.serialize() With Nested Attributes", function() {
+    var form = $("form_with_nested_attributes");
+    var expectedStr = "foo[name]=Foo+1&foo[combined_weight]=250+lbs&foo[bars][][name]=Bar+1&foo[bars][][weight]=100+lbs&foo[bars][][name]=Bar+2&foo[bars][][weight]=150+lbs";
+    var decodedStr = decodeURIComponent(form.serialize(false));
+    assert.equal(expectedStr, decodedStr);
+    var expectedHash = {
+      'foo[name]': 'Foo 1',
+      'foo[combined_weight]': '250 lbs',
+      'foo[bars]': [
+        {'name': 'Bar 1', 'weight': '100 lbs'},
+        {'name': 'Bar 2', 'weight': '150 lbs'}
+      ]
+    }
+    assertHashEqual(expectedHash, form.serialize(true));
+  });
   
   test("Form.request()", function(done) {
     var request = $("form").request();

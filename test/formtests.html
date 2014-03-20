@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>PrototypeJS Form Interaction Tests</title>
-	<link rel="stylesheet" href="mocha.css" />
+  <meta charset="utf-8">
+  <title>PrototypeJS Form Interaction Tests</title>
+  <link rel="stylesheet" href="mocha.css" />
 </head>
 <body>
   <ul>
@@ -14,13 +14,13 @@
     <li><a href="selectortests.html">Selector Interaction Tests</a></li>
     <li><a href="layouttests.html">Layout Tests</a></li>
   </ul>
-	<div id="mocha"></div>
+  <div id="mocha"></div>
   <script src="../dist/prototype.min.js"></script>
   <script src="es5polyfill.js"></script>
   <script src="mocha.js"></script>
   <script src="proclaim.js"></script>
-	<script>mocha.setup('tdd')</script>
-	<script>
+  <script>mocha.setup('tdd')</script>
+  <script>
     if(typeof console === 'undefined')
     {
       var console = {'log' : function() {} };
@@ -33,16 +33,16 @@
       });
       return true;
     }
-		function assertRespondsTo(method, obj, msg) {
-			var message = arguments[2] || 'assertRespondsTo';
-			try {
-				if(!(obj[method] && typeof obj[method] == 'function'))
-				{
-					throw new Error(msg + ": object doesn't respond to [" + method + "]");
-				}
-			}
-			catch(e) { throw new Error(e); }
-		}
+    function assertRespondsTo(method, obj, msg) {
+      var message = arguments[2] || 'assertRespondsTo';
+      try {
+        if(!(obj[method] && typeof obj[method] == 'function'))
+        {
+          throw new Error(msg + ": object doesn't respond to [" + method + "]");
+        }
+      }
+      catch(e) { throw new Error(e); }
+    }
     function assertEnabled(){
       for (var i = 0, element; element = arguments[i]; i++) {
         assert(!$(element).disabled);
@@ -73,9 +73,9 @@
       }
     }
 
-		function info(msg){
-			console.log(msg)
-		}
+    function info(msg){
+      console.log(msg)
+    }
     function assertElementsMatch() {
       var expressions = $A(arguments), elements = $A(expressions.shift());
       if (elements.length != expressions.length) {
@@ -88,18 +88,18 @@
         throw new Error('assertElementsMatch: (in index ' + index + ') expected ' + expression.inspect() + ' but got ' + element.inspect());
       });
     }
-	</script>
-	<script src="unit/form.test.js"></script>
-	<script>
-		if (window.mochaPhantomJS)
-		{
-			mochaPhantomJS.run(); 
-		}
-		else
-		{
-			mocha.run();
-		}
-		</script>
+  </script>
+  <script src="unit/form.test.js"></script>
+  <script>
+    if (window.mochaPhantomJS)
+    {
+      mochaPhantomJS.run(); 
+    }
+    else
+    {
+      mocha.run();
+    }
+    </script>
 <div id="testlog"></div>
 
 <form id="form" method="get" action="ajaxtest_assets/empty.js">
@@ -248,5 +248,27 @@
   </select>
   <input type="submit" />
 </form>
+
+<form id="form_with_nested_attributes" style="display:none;">
+  <p>
+    <label>Name</label>
+    <input type="text" name="foo[name]" value="Foo 1" />
+  </p>
+  <p>
+    <label>Combined weight</label>
+    <input type="text" name="foo[combined_weight]" value="250 lbs" />
+  </p>
+  <p>
+    <label>Bar collection 1</label>
+    <input type="text" name="foo[bars][][name]" value="Bar 1" />
+    <input type="text" name="foo[bars][][weight]" value="100 lbs" />
+  </p>
+  <p>
+    <label>Bar collection 2</label>
+    <input type="text" name="foo[bars][][name]" value="Bar 2" />
+    <input type="text" name="foo[bars][][weight]" value="150 lbs" />
+  </p>
+</form>
+
 </body>
 </html>
