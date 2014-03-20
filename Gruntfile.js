@@ -74,38 +74,42 @@ module.exports = function(grunt) {
 
 	function generate_docs()
 	{
+		var parseObject = require('./test/docparser.js');
 
+		var results = parseObject.parse();
+
+		console.log(results);
 
 	}
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		PROTOTYPE_VERSION : grunt.file.readYAML('src/constants.yml'),
-		resolve: {
-			files: ['src/prototype.js'],
-			dist:'dist'
+		resolve : {
+			files : ['src/prototype.js'],
+			dist : 'dist'
 		},
-		replacevars:{
-			file:'dist/prototype.js',
+		replacevars : {
+			file : 'dist/prototype.js',
 			PROTOTYPE_VERSION : '<%= PROTOTYPE_VERSION.PROTOTYPE_VERSION %>'
 		},
-		gcc_rest:{
-			source:'dist/prototype.js',
-			dest:'dist/prototype.min.js'
+		gcc_rest : {
+			source : 'dist/prototype.js',
+			dest : 'dist/prototype.min.js'
 		},
-		concat: {
-			options: {
-				process: stripcomments,
-				banner: "/**\n * @preserve\n * Prototype JavaScript framework, version <%= PROTOTYPE_VERSION.PROTOTYPE_VERSION %>\n *  (c) 2005-2010 Sam Stephenson\n *\n *  Prototype is freely distributable under the terms of an MIT-style license.\n *  For details, see the Prototype web site: http://www.prototypejs.org/\n *\n *--------------------------------------------------------------------------*/\n"
+		concat : {
+			options : {
+				process : stripcomments,
+				banner : "/**\n * @preserve\n * Prototype JavaScript framework, version <%= PROTOTYPE_VERSION.PROTOTYPE_VERSION %>\n *  (c) 2005-2010 Sam Stephenson\n *\n *  Prototype is freely distributable under the terms of an MIT-style license.\n *  For details, see the Prototype web site: http://www.prototypejs.org/\n *\n *--------------------------------------------------------------------------*/\n"
 			},
-			dist: {
+			dist : {
 				src : ['dist/prototype.js'],
 				dest : 'dist/prototype.js'
 			}
 		},
-		mocha_phantomjs:{
-			all: {
-				options: {
+		mocha_phantomjs : {
+			all : {
+				options : {
 						'urls'	: [ 'http://localhost:1337/test/ajaxtests.html',
 									'http://localhost:1337/test/formtests.html' ]
 				},
