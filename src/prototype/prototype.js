@@ -1,5 +1,4 @@
-/**
- * @preserve
+/*
  * Prototype JavaScript framework, version <%= PROTOTYPE_VERSION %>
  *  (c) 2005-2010 Sam Stephenson
  *
