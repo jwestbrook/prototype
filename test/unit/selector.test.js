@@ -364,8 +364,8 @@ suite("Selector Interactions",function(){
   });
 
   test("Commas For $$()", function() {
-    assertenum($('p', 'link_1', 'list', 'item_1', 'item_3', 'troubleForm'), $$('#list, .first,#item_3 , #troubleForm'));
-    assertenum($('p', 'link_1', 'list', 'item_1', 'item_3', 'troubleForm'), $$('#list, .first', '#item_3 , #troubleForm'));
+    assertenum($('p', 'link_1', 'list', 'item_1', 'item_3', 'troubleForm'), $$('#list, .first, #item_3, #troubleForm'));
+    assertenum($('p', 'link_1', 'list', 'item_1', 'item_3', 'troubleForm'), $$('#list, .first', '#item_3, #troubleForm'));
     assertenum($('commaParent', 'commaChild'), $$('form[title*="commas,"], input[value="#commaOne,#commaTwo"]'));
     assertenum($('commaParent', 'commaChild'), $$('form[title*="commas,"]', 'input[value="#commaOne,#commaTwo"]'));
   });
