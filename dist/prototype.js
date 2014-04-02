@@ -2680,6 +2680,19 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
     return element;
   }
+  // Test whether checkboxes work properly with `hasAttribute`.
+  var PROBLEMATIC_HAS_ATTRIBUTE_WITH_CHECKBOXES = (function () {
+    if (!HAS_EXTENDED_CREATE_ELEMENT_SYNTAX) {
+      // Only IE browsers are known to exhibit this one, so we'll take a
+      // shortcut.
+      return false;
+    }
+    var checkbox = document.createElement('<input type="checkbox">');
+    checkbox.checked = true;
+    var node = checkbox.getAttributeNode('checked');
+    var buggy = !node.specified;
+    return !node.specified;
+  })();
   
   function hasAttribute(element, attribute) {
     attribute = ATTRIBUTE_TRANSLATIONS.has[attribute] || attribute;
@@ -2687,8 +2700,16 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return !!(node && node.specified);
   }
   
-  GLOBAL.Element.Methods.Simulated.hasAttribute = hasAttribute;
+  function hasAttribute_IE(element, attribute) {
+    if (attribute === 'checked') {
+      return element.checked;
+    }
+    return hasAttribute(element, attribute);
+  }
   
+  GLOBAL.Element.Methods.Simulated.hasAttribute = 
+   PROBLEMATIC_HAS_ATTRIBUTE_WITH_CHECKBOXES ? 
+   hasAttribute_IE : hasAttribute;  
   function classNames(element) {
     return new Element.ClassNames(element);
   }

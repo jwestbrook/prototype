@@ -1108,7 +1108,7 @@ suite("DOM Interactions",function(){
       checkedCheckbox = $('write_attribute_checked_checkbox');
     assert( checkbox.       writeAttribute('checked').             checked);
     assert( checkbox.       writeAttribute('checked').             hasAttribute('checked'));
-    assert.equal('checked', checkbox.writeAttribute('checked').getAttribute('checked'));
+    assert.equal('checked', checkbox.writeAttribute('checked').readAttribute('checked'));
     assert(!checkbox.       writeAttribute('checked').             hasAttribute('undefined'));
     assert( checkbox.       writeAttribute('checked', true).       checked);
     assert( checkbox.       writeAttribute('checked', true).       hasAttribute('checked'));
