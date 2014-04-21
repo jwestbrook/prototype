@@ -294,7 +294,7 @@ var Hash = Class.create(Enumerable, (function() {
     var result, resultArr;
 
     // to deal with nested arrays (associative and otherwise) inside hash
-    if(typeof value == 'object') { 
+    if(typeof value === 'object' && value !== null) {
       resultArr = [];
       for(key2 in value) {
         if (typeof value[key2] != 'function') {
