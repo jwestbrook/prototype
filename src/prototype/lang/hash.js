@@ -291,8 +291,27 @@ var Hash = Class.create(Enumerable, (function() {
   function toQueryPair(key, value) {
     if (Object.isUndefined(value)) return key;
     
-    value = String.interpret(value);
+    var result, resultArr;
 
+    // to deal with nested arrays (associative and otherwise) inside hash
+    if(typeof value == 'object') { 
+      resultArr = [];
+      for(key2 in value) {
+        if (typeof value[key2] != 'function') {
+          var fullKey = key + encodeURIComponent('[]['+key2+']');
+          var value2 = cleanQueryValue(value[key2]);
+          resultArr.push(fullKey+'='+value2);
+        }
+      }
+      result = resultArr.join('&');
+    } else {
+      result = key + '=' + cleanQueryValue(value);
+    }
+    return result;
+  }
+
+  function cleanQueryValue(value) {
+    value = String.interpret(value);
     // Normalize newlines as \r\n because the HTML spec says newlines should
     // be encoded as CRLFs.
     value = value.gsub(/(\r)?\n/, '\r\n');
@@ -300,7 +319,7 @@ var Hash = Class.create(Enumerable, (function() {
     // Likewise, according to the spec, spaces should be '+' rather than
     // '%20'.
     value = value.gsub(/%20/, '+');
-    return key + '=' + value;
+    return value;
   }
 
   /** related to: String#toQueryParams

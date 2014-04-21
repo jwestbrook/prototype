@@ -106,12 +106,28 @@ var Form = {
     // default true, as that's the new preferred approach.
     if (typeof options != 'object') options = { hash: !!options };
     else if (Object.isUndefined(options.hash)) options.hash = true;
-    var key, value, submitted = false, submit = options.submit, accumulator, initial;
-    
+    var key, value, 
+      submitted = false, 
+      submit = options.submit, 
+      accumulator,
+      initial;
     if (options.hash) {
       initial = {};
-      accumulator = function(result, key, value) {
-        if (key in result) {
+      accumulator = function myself(result, key, value) {
+        // Does key indicate this property is part of an array
+        // of nested objects, ie... 'things[][foo]' ?
+        var keyArrayIndex = key.indexOf('[][');
+        if (keyArrayIndex != -1) {
+          var key2 = key.substring(0,keyArrayIndex); // things[]
+          if (!Object.isArray(result[key2])) result[key2] = [{}];
+          
+          var subKey = key.substring(keyArrayIndex+3, key.length-1); // foo
+          // key already exists within this collection
+          if (subKey in result[key2].last()) result[key2].push({});
+          var innerObj = result[key2].last();
+          // Recursion in case of further nested objects...
+          myself(innerObj, subKey, value);
+        } else if (key in result) {
           if (!Object.isArray(result[key])) result[key] = [result[key]];
           result[key] = result[key].concat(value);
         } else result[key] = value;
@@ -139,8 +155,16 @@ var Form = {
     return elements.inject(initial, function(result, element) {
       if (!element.disabled && element.name) {
         key = element.name; value = $(element).getValue();
-        if (value != null && element.type != 'file' && (element.type != 'submit' || (!submitted &&
-            submit !== false && (!submit || key == submit) && (submitted = true)))) {
+        if (
+          value != null && element.type != 'file' && 
+          (element.type != 'submit' || 
+            (
+              !submitted && submit !== false && 
+              (!submit || key == submit) && 
+              (submitted = true)
+            )
+          )
+        ) {
           result = accumulator(result, key, value);
         }
       }

@@ -317,29 +317,37 @@ suite("Form Interactions",function(){
 
   test("Form.serialize() Multiple Select", function () {
     var form = $("form_with_multiple_select");
-    assert.equal("peewee=herman&colors=pink&colors=blue&colors=yellow&colors=not+grey&number=2", form.serialize(false));
+    assert.equal(
+      form.serialize(false),
+      "peewee=herman&colors=pink&colors=blue&colors=yellow&colors=not+grey&number=2"
+    );
     var hash = {
       peewee: 'herman',
       colors: ['pink', 'blue', 'yellow', 'not grey'],
       number: '2'
     };
-    assertHashEqual(hash, form.serialize(true));
-});
+    assert.equal(
+      JSON.stringify(form.serialize(true)),
+      JSON.stringify(hash)
+    );
+  });
 
   test("Form.serialize() With Nested Attributes", function() {
     var form = $("form_with_nested_attributes");
-    var expectedStr = "foo[name]=Foo+1&foo[combined_weight]=250+lbs&foo[bars][][name]=Bar+1&foo[bars][][weight]=100+lbs&foo[bars][][name]=Bar+2&foo[bars][][weight]=150+lbs";
+    var expectedStr = "foo[name]=Foo+1&foo[combined_weight]=250+lbs&foo[bars][][name]=Bar+1&foo[bars][][weight]=100+lbs&foo[bars][][tax]=&foo[bars][][name]=Bar+2&foo[bars][][weight]=150+lbs&foo[bars][][tax]=1";
     var decodedStr = decodeURIComponent(form.serialize(false));
     assert.equal(expectedStr, decodedStr);
     var expectedHash = {
       'foo[name]': 'Foo 1',
       'foo[combined_weight]': '250 lbs',
       'foo[bars]': [
-        {'name': 'Bar 1', 'weight': '100 lbs'},
-        {'name': 'Bar 2', 'weight': '150 lbs'}
+        {'name': 'Bar 1', 'weight': '100 lbs', 'tax': ''},
+        {'name': 'Bar 2', 'weight': '150 lbs', 'tax': '1'}
       ]
     }
-    assertHashEqual(expectedHash, form.serialize(true));
+    var actualHash = form.serialize(true);
+    assert.equal(typeof actualHash['foo[bars]'], 'object');
+    assert.equal(JSON.stringify(actualHash), JSON.stringify(expectedHash));
   });
   
   test("Form.request()", function(done) {
