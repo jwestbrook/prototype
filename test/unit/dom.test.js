@@ -305,6 +305,9 @@ suite("DOM Interactions",function(){
   test("Element.visible()", function(){
     assert.notEqual('none', $('test-visible').style.display);
     assert.equal('none', $('test-hidden').style.display);
+    assert($('test-visible').visible());
+    assert(!$('test-invisible').visible());
+    assert(!$('test-hidden').visible());    
   });
   
   test("Element.toggle()", function(){
