@@ -294,6 +294,12 @@ suite("Enumerable Namespace",function(){
       EnumFixtures.Primes.inject(0, function(sum, value) {
         return sum + value;
       }));
+    var sum = EnumFixtures.Primes.inject(0, function(sum, value) {
+      if (value === 5) throw $break;
+      return sum + value;
+    });
+    //inject should catch a thrown $break
+    assert.equal(6, sum);
   });
   
   test(".inject() passes memo, value, index and collection to the iterator",function() {
