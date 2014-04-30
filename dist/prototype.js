@@ -2974,7 +2974,6 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
   
   function getStyle(element, style) {
-    if (style === 'opacity') return getOpacity(element);
     element = $(element);
     style = normalizeStyleName(style);
     // Try inline styles first.
@@ -2985,6 +2984,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       value = css ? css[style] : null;
     }
     
+    if (style === 'opacity') return value ? parseFloat(value) : 1.0;
     return value === 'auto' ? null : value;
   }
   
@@ -3009,7 +3009,6 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
   
   function getStyle_IE(element, style) {
-    if (style === 'opacity') return getOpacity_IE(element);
     element = $(element);
     style = normalizeStyleName_IE(style);
     // Try inline styles first.
@@ -3019,6 +3018,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       value = element.currentStyle[style];
     }
     
+    if (style === 'opacity') {
+      if (!STANDARD_CSS_OPACITY_SUPPORTED)
+        return getOpacity_IE(element);
+      else return value ? parseFloat(value) : 1.0;
+    }
     if (value === 'auto') {
       // If we need a dimension, return null for hidden elements, but return
       // pixel values for visible elements.

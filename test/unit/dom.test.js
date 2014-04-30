@@ -1041,7 +1041,9 @@ suite("DOM Interactions",function(){
   });
   
   test("Element.getOpacity()", function() {
-    assert.equal(0.45, $('op1').setOpacity(0.45).getOpacity());
+    var opacity = $('op1').setOpacity(0.45).getOpacity();
+    assert.equal(0.45, opacity);
+    assert.equal('number', typeof opacity, 'opacity should be a string, not a number');
   });
   
   test("Element.readAttribute()", function() {
