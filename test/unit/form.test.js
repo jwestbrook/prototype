@@ -327,8 +327,8 @@ suite("Form Interactions",function(){
       number: '2'
     };
     assert.equal(
-      JSON.stringify(form.serialize(true)),
-      JSON.stringify(hash)
+      Object.toJSON(form.serialize(true)),
+      Object.toJSON(hash)
     );
   });
 
@@ -347,7 +347,7 @@ suite("Form Interactions",function(){
     }
     var actualHash = form.serialize(true);
     assert.equal(typeof actualHash['foo[bars]'], 'object');
-    assert.equal(JSON.stringify(actualHash), JSON.stringify(expectedHash));
+    assert.equal(Object.toJSON(actualHash), Object.toJSON(expectedHash));
   });
   
   test("Form.request()", function(done) {
