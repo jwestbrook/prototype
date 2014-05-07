@@ -13,15 +13,12 @@
     "open": "~0.0.4",
     "mocha": "~1.14.0",
     "mocha-phantomjs": "~3.1.6",
-    "closurecompiler": "~1.1.4",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.11",
     "grunt-resolve": "~0.1.2",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-mocha-phantomjs": "~0.3.1",
-    "grunt-saucelabs": "~4.1.2",
     "handlebars": "~1.1.2",
-    "fs.extra": "~1.2.1",
-    "node-markdown": "~0.1.1"
+    "fs.extra": "~1.2.1"
   }
 }

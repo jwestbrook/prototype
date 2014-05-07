@@ -37,7 +37,6 @@ function stripcomments(src,filepath)
 module.exports = function(grunt) {
 
 	var fs = require('fs');
-	var ClosureCompiler = require("closurecompiler");
 
 	function replacevars()
 	{
@@ -127,7 +126,6 @@ module.exports = function(grunt) {
 
 
 	grunt.registerTask('replacevars','Replace Variables in PrototypeJS file',replacevars);
-	grunt.registerTask('gcc_rest',"Run Google Closure Compiler",closure_compile);
 	grunt.registerTask('generate_docs',"Generate Prototype Docs from Source Code",generate_docs);
 	grunt.registerTask('runwebserver',"Run Test Webserver",function(){
 		var done = this.async();
@@ -138,7 +136,7 @@ module.exports = function(grunt) {
 	})
 
 	grunt.registerTask('test', ['runwebserver','mocha_phantomjs']);
-	grunt.registerTask('dist', ['resolve','replacevars','concat','gcc_rest']);
+	grunt.registerTask('dist', ['resolve','replacevars','concat']);
 	grunt.registerTask('docs',['resolve','replacevars','generate_docs']);
 
 	grunt.registerTask('default',['test','dist'])
