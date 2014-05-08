@@ -1992,7 +1992,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   
   function toggle(element, bool) {
     element = $(element);
-    if (Object.isUndefined(bool))
+    if (typeof bool !== 'boolean')
       bool = !Element.visible(element);
     Element[bool ? 'show' : 'hide'](element);
     
@@ -4100,8 +4100,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       }
     } while (element);
     
-    valueT -= layout.get('margin-top');
     valueL -= layout.get('margin-left');
+    valueT -= layout.get('margin-top');
     
     return new Element.Offset(valueL, valueT);
   }
