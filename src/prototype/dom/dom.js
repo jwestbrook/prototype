@@ -274,7 +274,8 @@
   
   /**
    *  Element.toggle(@element[, bool]) -> Element
-   *
+   *  - bool (Boolean): Whether the element should be shown or hidden. If not
+   *    a boolean, this argument will be ignored.
    *  Toggles the CSS `display` of `element`. Returns `element`.
    *  
    *  Switches an element's CSS `display` between `none` and its inherited
@@ -283,6 +284,12 @@
    *  By default, `toggle` will switch the display to the opposite of its
    *  current state, but will use the `bool` argument instead if it's
    *  provided (`true` to show the element, `false` to hide it).
+   *  If the `bool` argument is not a boolean, **it will be ignored**. This
+   *  preserves the ability to toggle elements through comparisons (e.g.,
+   *  `errorElement.toggle(errors > 0)`) while also letting a user do
+   *  `someElements.each(Element.toggle)` without falling victim to 
+   *  JavaScript's famous [problems with variadic arguments](http://www.wirfs-brock.com/allen/posts/166).
+   *  
    *  
    *  ##### Examples
    *  
@@ -335,7 +342,7 @@
   **/
   function toggle(element, bool) {
     element = $(element);
-    if (Object.isUndefined(bool))
+    if (typeof bool !== 'boolean')
       bool = !Element.visible(element);
     Element[bool ? 'show' : 'hide'](element);
     

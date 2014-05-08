@@ -319,6 +319,9 @@ suite("DOM Interactions",function(){
     assert($('test-toggle-hidden').visible(), 'test-toggle-hidden 1');
     $('test-toggle-hidden').toggle();
     assert(!$('test-toggle-hidden').visible(), 'test-toggle-hidden 2');
+    $('test-toggle-hidden', 'test-toggle-visible').each(Element.toggle);
+    assert(!$('test-toggle-visible').visible(), 'test-toggle-visible-3');
+    assert($('test-toggle-hidden').visible(), 'test-toggle-hidden-3');
   });
   
   test("Element.show()", function(){
