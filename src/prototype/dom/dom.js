@@ -2139,6 +2139,7 @@
   }
   
   function descendantOf_compareDocumentPosition(element, ancestor) {
+    if (!ancestor) return false;
     element = $(element), ancestor = $(ancestor);
     return (element.compareDocumentPosition(ancestor) & 8) === 8;
   }
