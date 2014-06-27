@@ -126,7 +126,6 @@ module.exports = function(grunt) {
 
 
 	grunt.registerTask('replacevars','Replace Variables in PrototypeJS file',replacevars);
-	grunt.registerTask('generate_docs',"Generate Prototype Docs from Source Code",generate_docs);
 	grunt.registerTask('runwebserver',"Run Test Webserver",function(){
 		var done = this.async();
 		require('./test/webserver.js').listen(1337, '127.0.0.1',function(){
@@ -137,7 +136,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('test', ['runwebserver','mocha_phantomjs']);
 	grunt.registerTask('dist', ['resolve','replacevars','concat']);
-	grunt.registerTask('docs',['resolve','replacevars','generate_docs']);
 
 	grunt.registerTask('default',['test','dist'])
 
